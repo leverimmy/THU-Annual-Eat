@@ -57,7 +57,7 @@ if __name__ == "__main__":
                 all_data[item["mername"]] = item["txamt"]
         except Exception as e:
             pass
-    all_data = {k: round(v / 100, 2) for k, v in all_data.items()} # 将分转换为元，并保留两位小数
+    all_data = {k: round(v / 100, 2) for k, v in all_data.items() if round(v / 100, 2) > 200} # 将分转换为元，并保留两位小数
     print(len(all_data))
     # 输出结果
     all_data = dict(sorted(all_data.items(), key=lambda x: x[1], reverse=False))
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     else:
         plt.rcParams['font.sans-serif'] = ['SimHei']
         
-    plt.figure(figsize=(12, len(all_data) / 66 * 18))
+    plt.figure(figsize=(5, len(all_data) / 66 * 18))
     plt.barh(list(all_data.keys()), list(all_data.values()))
     for index, value in enumerate(list(all_data.values())):
         plt.text(value + 0.01 * max(all_data.values()),
@@ -80,5 +80,6 @@ if __name__ == "__main__":
     plt.xlim(0, 1.2 * max(all_data.values()))
     plt.title("华清大学食堂消费情况")
     plt.xlabel("消费金额（元）")
-    plt.savefig("result.png")
+    plt.tight_layout()
+    plt.savefig("result.png", dpi=600)
     plt.show()
