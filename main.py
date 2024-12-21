@@ -1,3 +1,12 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "requests",
+#   "matplotlib",
+#   "pycryptodome",
+# ]
+# ///
+
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import base64
