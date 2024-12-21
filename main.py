@@ -113,7 +113,6 @@ if __name__ == "__main__":
     plt.xlim(0, 1.2 * max(all_data.values()))
     plt.title("本人2024年在华清大学食堂消费情况")
     plt.xlabel("消费金额（元）")
-    plt.savefig("result.png")
     # show total consumption on the plot
     plt.text(
         0.5,
@@ -122,6 +121,7 @@ if __name__ == "__main__":
         fontsize=12,
         transform=plt.gcf().transFigure,
     )
-    plt.show()
+    plt.savefig("result.png")
 
+    plt.show()
     print("总计消费金额：", sum(all_data.values()))
