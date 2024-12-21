@@ -61,6 +61,12 @@ if __name__ == "__main__":
     print(len(all_data))
     # 输出结果
     all_data = dict(sorted(all_data.items(), key=lambda x: x[1], reverse=False))
+
+    # remove non-food data, such as "学生卡成本" "淋浴" "西湖游泳池"
+    remove_keywords = ["学生卡成本", "淋浴", "西湖游泳池", "饮水", "自助打印成绩单", "超期缴费"]
+    all_data = {k: v for k, v in all_data.items() if not any(ch in k for ch in remove_keywords)}
+
+
     if platform.system() == "Darwin":
         plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
     elif platform.system() == "Linux":
