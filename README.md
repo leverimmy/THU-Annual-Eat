@@ -22,18 +22,18 @@
 
 ![servicehall](./servicehall.png)
 
-### 1. 安装依赖
-
-如果你安装了 [uv](https://docs.astral.sh/uv/)，你可以直接运行：
+如果你安装了 [uv](https://docs.astral.sh/uv/)，直接运行：
 
 ```bash
 uv run main.py
 ```
 
-本项目依赖于 `requests`、`matplotlib` 和 `pycryptodome`，请确保你的 Python 环境中已经安装了这些库。
+### 1. 安装依赖
+
+本项目依赖于 `requests` 和 `pycryptodome`，请确保你的 Python 环境中已经安装了这些库。
 
 ```bash
-pip install requests matplotlib pycryptodome
+pip install requests pycryptodome
 ```
 
 > 你可能需要在 `Python\Python312\Lib\site-packages` 目录下将 `crypto` 文件夹改名为 `Crypto`。

@@ -2,7 +2,6 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #   "requests",
-#   "matplotlib",
 #   "pycryptodome",
 # ]
 # ///
@@ -11,9 +10,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import base64
 import json
-import matplotlib.pyplot as plt
 import requests
-import platform
 
 def decrypt_aes_ecb(encrypted_data: str) -> str:
     
@@ -57,37 +54,14 @@ if __name__ == "__main__":
     decrypted_string = decrypt_aes_ecb(encrypted_string)
 
     # 整理数据
-    data = json.loads(decrypted_string)
-    for item in data["resultData"]["rows"]:
-        try:
-            if item["mername"] in all_data:
-                all_data[item["mername"]] += item["txamt"]
-            else:
-                all_data[item["mername"]] = item["txamt"]
-        except Exception as e:
-            pass
-    all_data = {k: round(v / 100, 2) for k, v in all_data.items()} # 将分转换为元，并保留两位小数
-    print(len(all_data))
-    # 输出结果
-    all_data = dict(sorted(all_data.items(), key=lambda x: x[1], reverse=False))
-    if platform.system() == "Darwin":
-        plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
-    elif platform.system() == "Linux":
-        plt.rcParams['font.family'] = ['Droid Sans Fallback', 'DejaVu Sans']
-    else:
-        plt.rcParams['font.sans-serif'] = ['SimHei']
-        
-    plt.figure(figsize=(12, len(all_data) / 66 * 18))
-    plt.barh(list(all_data.keys()), list(all_data.values()))
-    for index, value in enumerate(list(all_data.values())):
-        plt.text(value + 0.01 * max(all_data.values()),
-                index,
-                str(value),
-                va='center')
-        
-    # plt.tight_layout()
-    plt.xlim(0, 1.2 * max(all_data.values()))
-    plt.title("华清大学食堂消费情况")
-    plt.xlabel("消费金额（元）")
-    plt.savefig("result.png")
-    plt.show()
+    data = json.loads(decrypted_string)["resultData"]["rows"]
+    data = [{
+        "name": item["mername"],
+        "place": item["meraddr"],
+        "date": item["txdate"],
+        "value": item["txamt"],
+        "balance": item["balance"],
+        "cardno": item["cardno"],
+    } for item in data if ("mername" in item)]
+    with open("output.json", "w", encoding='utf-8') as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
