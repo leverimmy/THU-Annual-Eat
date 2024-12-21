@@ -51,6 +51,12 @@ python main.py
 }
 ```
 
+如果你想合并同一食堂的数据，并优化表格配色，你可以直接运行`main_merge.py`。
+
+```bash
+python main_merge.py
+```
+
 ## LICENSE
 
 除非另有说明，本仓库的内容采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议。在遵守许可协议的前提下，您可以自由地分享、修改本文档的内容，但不得用于商业目的。
