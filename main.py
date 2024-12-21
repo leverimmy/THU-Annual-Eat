@@ -89,13 +89,14 @@ if __name__ == "__main__":
                 all_data[item["mername"]] = item["txamt"]
         except Exception as e:
             pass
+
+    if args.by_cafe:
+        all_data = aggregate_cafeteria(all_data)
+
     all_data = {
         k: round(v / 100, 2) for k, v in all_data.items()
     }  # 将分转换为元，并保留两位小数
     # print(len(all_data))
-
-    if args.by_cafe:
-        all_data = aggregate_cafeteria(all_data)
 
     # 输出结果
     all_data = dict(sorted(all_data.items(), key=lambda x: x[1], reverse=False))
