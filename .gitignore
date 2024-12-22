@@ -1,6 +1,7 @@
 # User data
 config.json
 result.png
+output.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

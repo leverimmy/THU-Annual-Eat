@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>你今年吃了啥</title>
+    <script src="output.js"></script>
+    <script src="./vis/d3.js"></script>
+    <script src="./vis/plot.js"></script>
+    <script src="./vis/arquero.js"></script>
+    <link rel="stylesheet" href="./vis/tachyons.min.css" />
+    <script defer src="./vis/main.js"></script>
+    <style>
+      .wavy,
+      ans:hover {
+        background-image: url("./vis/underline.svg");
+        background-position: 0 calc(100% - 1.5px);
+        background-size: auto 3px;
+        background-repeat: repeat-x;
+        padding-bottom: 3px;
+        text-decoration: none;
+      }
+      ans {
+        cursor: pointer;
+      }
+      plot {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body class="pa0 ma0">
+    <header class="center bg-black white ma0">
+      <h1 class="f-headline lh-title center ma0 pv4 ph2">你今年吃了些啥？</h1>
+    </header>
+    <main class="lh-copy">
+      <section>
+        <div class="center pa3">
+          <p>
+            你今年一共吃了 <ans id="ntot"></ans> 元，去得最多的食堂窗口是
+            <ans id="nwindow"></ans>, 去得最多的食堂是 <ans id="nplace"></ans>。
+          </p>
+          <plot id="pwindow"></plot>
+          <plot id="pplace"></plot>
+        </div>
+      </section>
+      <section>
+        <div class="center pa3">
+          <h2>你的一天</h2>
+          <p>
+            你今年总共吃了 <ans id="ndaycount"></ans> 天食堂，平均每天花费
+            <ans id="ndayavg"></ans> 元，中位数是 <ans id="ndaymid"></ans> 元。
+          </p>
+          <plot id="pyear"></plot>
+        </div>
+        <!-- <div class="mw6 center pa3">
+          <p>
+            你一般 <ans id="nbtime"></ans> 吃早饭（虽然今年只吃了
+            <ans id="nbcount"></ans> ），然后 <ans id="nltime"></ans>吃午饭，
+            <ans id="ndtime"></ans> 吃晚饭。
+          </p>
+        </div> -->
+      </section>
+    </main>
+  </body>
+</html>
