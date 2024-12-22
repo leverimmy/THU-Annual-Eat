@@ -78,7 +78,7 @@ if __name__ == "__main__":
         
     # plt.tight_layout()
     plt.xlim(0, 1.2 * max(all_data.values()))
-    plt.title("华清大学食堂消费情况")
+    plt.title(f"华清大学食堂消费情况（共计{sum(all_data.values())}元）")
     plt.xlabel("消费金额（元）")
     plt.savefig("result.png")
     plt.show()
