@@ -40,7 +40,7 @@ pip install requests matplotlib pycryptodome
 python main.py
 ```
 
-首次运行时，请输入你的学号和“服务代码”，会自动保存在 `config.json` 文件中。
+首次运行时，请输入你的学号和服务代码，会自动保存在 `config.json` 文件中。
 
 ### 3.（可选）修改配置
 
