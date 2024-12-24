@@ -62,14 +62,15 @@ if __name__ == "__main__":
     # 输出结果
     all_data = dict(sorted(all_data.items(), key=lambda x: x[1], reverse=False))
     if platform.system() == "Darwin":
-        plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+        plt.rcParams['font.sans-serif'] = ['Kaiti SC', 'Arial Unicode MS']
     elif platform.system() == "Linux":
         plt.rcParams['font.family'] = ['Droid Sans Fallback', 'DejaVu Sans']
     else:
         plt.rcParams['font.sans-serif'] = ['SimHei']
         
     plt.figure(figsize=(12, len(all_data) / 66 * 18))
-    plt.barh(list(all_data.keys()), list(all_data.values()))
+    # 绘制柱状图，颜色设置为清华紫 (RGB: 102, 8, 116)
+    plt.barh(list(all_data.keys()), list(all_data.values()), color=(102/255, 8/255, 116/255))
     for index, value in enumerate(list(all_data.values())):
         plt.text(value + 0.01 * max(all_data.values()),
                 index,
@@ -80,5 +81,7 @@ if __name__ == "__main__":
     plt.xlim(0, 1.2 * max(all_data.values()))
     plt.title(f"华清大学食堂消费情况（共计{sum(all_data.values())}元）")
     plt.xlabel("消费金额（元）")
-    plt.savefig("result.png")
+    plt.tight_layout()
+    plt.savefig("result.png", dpi=300, format="png")
+    plt.savefig("result.pdf", dpi=300, format="pdf")
     plt.show()
