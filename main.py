@@ -2,9 +2,60 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import base64
 import json
+import matplotlib
 import matplotlib.pyplot as plt
 import requests
 import platform
+
+# https://stackoverflow.com/a/79298983/13688160
+from matplotlib.font_manager import get_font_names
+def font_exists(name):
+    return name in get_font_names()
+
+# https://superuser.com/a/1866863/1677998
+from fontTools.ttLib import TTFont
+def chars_in_cmap(unicode_chars, cmap):
+    for char in unicode_chars:
+        if ord(char) not in cmap.cmap:
+            return False
+    return True
+def chars_in_font(unicode_chars, path):
+    if path.endswith('.ttf'):
+        font = TTFont(path)
+    elif path.endswith('.ttc'):
+        # https://github.com/fonttools/fonttools/issues/541
+        font = TTFont(path, fontNumber=0)
+    else:
+        return False
+    for cmap in font['cmap'].tables:
+        if cmap.isUnicode():
+            if chars_in_cmap(unicode_chars, cmap):
+                return True
+    return False
+
+from matplotlib.font_manager import findSystemFonts
+def find_font_containing(unicode_chars):
+    for path in findSystemFonts(fontpaths=None, fontext='ttf'):
+        if chars_in_font(unicode_chars, path):
+            return path
+    return None
+
+if platform.system() == "Darwin":
+    preferred_font = 'Arial Unicode MS'
+elif platform.system() == "Linux":
+    preferred_font = 'Droid Sans Fallback'
+else:
+    preferred_font = 'SimHei'
+if font_exists(preferred_font):
+    font = preferred_font
+else:
+    print(preferred_font + ' not found')
+    print('Searching for an alternative font...')
+    path = find_font_containing(u'汉字')
+    font = matplotlib.font_manager.FontProperties(fname=path).get_name()
+    print('Using ' + font)
+plt.rcParams['font.sans-serif'] = [font]
+
 
 def decrypt_aes_ecb(encrypted_data: str) -> str:
     
@@ -61,13 +112,6 @@ if __name__ == "__main__":
     print(len(all_data))
     # 输出结果
     all_data = dict(sorted(all_data.items(), key=lambda x: x[1], reverse=False))
-    if platform.system() == "Darwin":
-        plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
-    elif platform.system() == "Linux":
-        plt.rcParams['font.family'] = ['Droid Sans Fallback', 'DejaVu Sans']
-    else:
-        plt.rcParams['font.sans-serif'] = ['SimHei']
-        
     plt.figure(figsize=(12, len(all_data) / 66 * 18))
     plt.barh(list(all_data.keys()), list(all_data.values()))
     for index, value in enumerate(list(all_data.values())):
